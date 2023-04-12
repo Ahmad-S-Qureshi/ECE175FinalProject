@@ -15,6 +15,6 @@ void shuffle(head headPtr, int length) {
 
 }
 
-void swap(node node1, node node2) {
+void swapNodes(node node1, node node2) {
 
 }
