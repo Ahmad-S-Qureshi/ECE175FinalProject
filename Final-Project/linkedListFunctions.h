@@ -7,11 +7,11 @@ void createLinkedListHead() {
 
 }
 
-void createLinkedListNodeAtEnd(head headptr, int length) {
+void createLinkedListNodeAtEnd(node headptr, int length) {
 
 }
 
-void shuffle(head headPtr, int length) {
+void shuffle(node headPtr, int length) {
 
 }
 
