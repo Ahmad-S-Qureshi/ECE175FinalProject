@@ -3,3 +3,6 @@
 #include <stdbool.h>
 #include "./linkedListFunctions.h"
 
+int main() {
+    Node node1;
+}
