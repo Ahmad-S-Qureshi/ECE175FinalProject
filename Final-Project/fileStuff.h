@@ -34,5 +34,7 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     fgets(lineFromFile, 50, fp);
     prev = toBeNext;
     toBeNext = (Node*)malloc(sizeof(Node));
+    toBeNext->prevPtr = prev;
+    prev->nextPtr = toBeNext;
     return toBeNext;
 }

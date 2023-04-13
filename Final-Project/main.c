@@ -11,10 +11,9 @@ int main() {
     initializeData(data);
     FILE* fp = fopen("listOfCards.txt", "r");
     Node headNode;
-    char headData[50];
-    fgets(headData, 50, fp);
-    initializeNode(&headNode, &headNode, headData);
+    initializeNode(&headNode, &headNode, "This is the head\n");
     data.head = &headNode;
     data.tail = initializeLinkedListFromFile(data, fp);
+    strcpy(data.tail->data, "\nThis is the tail");
     printList(data);
 }
