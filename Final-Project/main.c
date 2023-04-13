@@ -16,4 +16,8 @@ int main() {
     data.tail = initializeLinkedListFromFile(data, fp);
     strcpy(data.tail->data, "\nThis is the tail");
     printList(data);
+    printf("%d\n", getLinkedListLength(&data));
+    swapNodes(&data, 2, 6);
+    printf("\n\n\n");
+    printList(data);
 }

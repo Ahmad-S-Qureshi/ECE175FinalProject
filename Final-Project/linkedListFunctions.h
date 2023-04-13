@@ -61,13 +61,26 @@ int getLinkedListLength(LinkedListData *data) {
         returnVal++;
         temp = temp->nextPtr;
     }
-    return returnVal;
+    return returnVal-1;
 }
 
-// void swapNodes(Node *node1, Node *node2) {
-//     prevPtr1 = node1->prevPtr;
-//     prevPtr2 = node2->prevPtr
-//     temp = prevPtr1;
-//     node1->prevPtr = prevPtr2;
-//     node2->prevPtr = temp;
-// }
+void swapNodes(LinkedListData *data, int lengthFromHeadToNode1, int lengthFromHeadToNode2) {
+    Node *node1 = data->head;
+    for(int i = 0; i<lengthFromHeadToNode1; i++) {
+        node1 = node1->nextPtr;
+    }
+    Node *node2 = data->head;
+    for(int i = 0; i<lengthFromHeadToNode2; i++) {
+        node2 = node2->nextPtr;
+    }
+    Node *node2cpy = node2;
+    Node *node1cpy = node1;
+
+    Node *tempPtr = (Node*)malloc(sizeof(Node));
+    tempPtr = node1->prevPtr;
+    node1->prevPtr = node2->prevPtr;
+    node2->prevPtr = tempPtr;
+    tempPtr = node1->nextPtr;
+    node1->nextPtr = node2->nextPtr;
+    node2->nextPtr = tempPtr;
+}
