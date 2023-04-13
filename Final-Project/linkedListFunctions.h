@@ -28,7 +28,7 @@ void initializeNode(Node *prevNode, Node *toBeInitialized, char *data) {
 void printList(LinkedListData data) {
     Node *currNode = data.head;
     while (currNode->nextPtr != NULL) {
-        printf("%s\n", currNode->data);
+        printf("%s", currNode->data);
         currNode = currNode->nextPtr;
     }
     printf("%s\n", currNode->data);
