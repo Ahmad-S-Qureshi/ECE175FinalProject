@@ -7,17 +7,22 @@
 
 
 int main() {
-    LinkedListData data;
-    initializeData(data);
+    LinkedListData discardData;
+    initializeData(discardData);
     FILE* fp = fopen("listOfCards.txt", "r");
-    Node headNode;
-    initializeNode(&headNode, &headNode, "This is the head\n");
-    data.head = &headNode;
-    data.tail = initializeLinkedListFromFile(data, fp);
-    strcpy(data.tail->data, "\nThis is the tail");
-    printList(data);
-    printf("%d\n", getLinkedListLength(&data));
-    swapNodes(&data, 6, 8);
+    Node discardHeadNode;
+    initializeNode(&discardHeadNode, &discardHeadNode, "This is the head of the discard pile\n");
+    discardData.head = &discardHeadNode;
+    discardData.tail = initializeLinkedListFromFile(discardData, fp);
+    strcpy(discardData.tail->data, "\nThis is the tail of the discard pile");
+    printList(discardData);
+    printf("%d\n", getLinkedListLength(&discardData));
+    LinkedListData drawData;
+    initializeData(drawData);
+    Node drawHeadNode;
+    initializeNode(&drawHeadNode, &drawHeadNode, "This is the head of the draw pile\n");
+    drawData.head = &drawHeadNode;
+    drawData.tail = moveDiscardToDraw(discardData, drawData);
     printf("\n\n\n");
-    printList(data);
+    printList(drawData);
 }
