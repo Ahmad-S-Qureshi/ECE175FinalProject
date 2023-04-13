@@ -50,7 +50,7 @@ void printList(LinkedListData data) {
 //     return temp;
 // }
 
-void shuffle(Node *headPtr) {
+void shuffle(LinkedListData *data) {
     
 }
 
