@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include "./linkedListFunctions.h"
-
+#include "./fileStuff.h"
 
 int getNumCards (FILE* fp) {
     char line[50];
