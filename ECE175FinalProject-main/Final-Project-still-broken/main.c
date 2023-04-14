@@ -8,6 +8,7 @@
 
 
 int main() {
+    
     LinkedListData discardData;
     initializeData(discardData);
     FILE* fp = fopen("listOfCards.txt", "r");
