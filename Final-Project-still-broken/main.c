@@ -7,10 +7,9 @@
 
 
 int main() {
-    LinkedListData data;
-    initializeData(data);
+    LinkedListData discardData;
+    initializeData(discardData);
     FILE* fp = fopen("listOfCards.txt", "r");
-<<<<<<< HEAD
     Node discardHeadNode;
     initializeNode(&discardHeadNode, &discardHeadNode, "This is the head of the discard pile\n");
     discardData.head = &discardHeadNode;
@@ -32,16 +31,4 @@ int main() {
     // drawData.tail = moveDiscardToDraw(discardData, drawData);
     // printf("\n\n\n");
     // printList(drawData);
-=======
-    Node headNode;
-    initializeNode(&headNode, &headNode, "This is the head\n");
-    data.head = &headNode;
-    data.tail = initializeLinkedListFromFile(data, fp);
-    strcpy(data.tail->data, "\nThis is the tail");
-    printList(data);
-    printf("%d\n", getLinkedListLength(&data));
-    swapNodes(&data, 6, 8);
-    printf("\n\n\n");
-    printList(data);
->>>>>>> parent of 838837a (epic)
 }

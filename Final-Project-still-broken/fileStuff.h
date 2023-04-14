@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "./linkedListFunctions.h"
+#include <stdlib.h>
 
 
 int getNumCards (FILE* fp) {
