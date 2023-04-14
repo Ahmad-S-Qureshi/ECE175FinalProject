@@ -8,6 +8,7 @@
 
 
 int main() {
+    //Vector List of LinkedListData's to be Implemented
     
     LinkedListData discardData;
     initializeData(discardData);
