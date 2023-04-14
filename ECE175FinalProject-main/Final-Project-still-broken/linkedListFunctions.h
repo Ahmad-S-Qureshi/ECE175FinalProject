@@ -1,4 +1,5 @@
-#include "./linkedListFunctions.h"
+#include <stdio.h>
+#include <string.h>
 
 
 void initializeData(LinkedListData data) {
@@ -13,7 +14,7 @@ void initializeNode(Node *prevNode, Node *toBeInitialized, char *data) {
         prevNode->prevPtr = NULL;
     }
     toBeInitialized->nextPtr = NULL;
-    strcpy(toBeInitialized->data, data);
+    strcpy((toBeInitialized->data).string, data);
 }
 
 Node *getElementFromIndex(LinkedListData *data, int index) {
@@ -28,6 +29,10 @@ void insertElementToList(LinkedListData *data, int indexBefore) {
     
 }
 
+void printNode(Node* nodeToBePrinted) {
+    printf("%s", nodeToBePrinted->data.string);
+}
+
 void printList(LinkedListData data) {
     Node *currNode = data.head;
     while (currNode != NULL) {
@@ -36,9 +41,7 @@ void printList(LinkedListData data) {
     }
 }
 
-void printNode(Node* nodeToBePrinted) {
-    printf("%s", nodeToBePrinted->data);
-}
+
 
 
 void shuffle(LinkedListData *data) {

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "structDefinitions.h"
 #include "./linkedListFunctions.h"
 #include "./fileStuff.h"
 
@@ -14,12 +15,12 @@ int main() {
     initializeNode(&discardHeadNode, &discardHeadNode, "This is the head of the discard pile\n");
     discardData.head = &discardHeadNode;
     discardData.tail = initializeLinkedListFromFile(discardData, fp);
-    strcpy(discardData.tail->data, "This is the tail of the discard pile\n");
+    strcpy((discardData.tail)->data.string, "This is the tail of the discard pile\n");
     printList(discardData);
 
     printf("\n\n\n\n");
     printNode(getElementFromIndex(&discardData, 0));
-    printNode(getElementFromIndex(&discardData, getLinkedListLength(&discardData) + 1));
+    printNode(getElementFromIndex(&discardData, getLinkedListLength(&discardData)-1));
     printf("%d\n", getLinkedListLength(&discardData));
 
     // printf("%d\n", getLinkedListLength(&discardData));
