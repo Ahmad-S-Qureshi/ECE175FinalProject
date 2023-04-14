@@ -38,5 +38,7 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     toBeNext = (Node*)malloc(sizeof(Node));
     toBeNext->prevPtr = prev;
     prev->nextPtr = toBeNext;
+    fclose(fp);
+    fp = fopen("listOfCards.txt", "r");
     return toBeNext;
 }
