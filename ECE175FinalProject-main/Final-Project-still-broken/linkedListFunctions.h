@@ -69,7 +69,12 @@ int getLinkedListLength(LinkedListData *data) {
 }
 
 Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newListData, Node *oldNode) {
-    //TBD
+    oldNode->prevPtr->nextPtr = oldNode->nextPtr;
+    oldNode->nextPtr->prevPtr = oldNode->prevPtr;
+    Node *newHead = newListData->head;
+    oldNode->nextPtr = newHead->nextPtr;
+    newHead->nextPtr = oldNode;
+    oldNode->prevPtr = newHead; 
 }
 
 Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
