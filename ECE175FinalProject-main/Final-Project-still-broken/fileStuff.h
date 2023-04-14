@@ -17,15 +17,17 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     Node *toBeNext = (Node*)malloc(sizeof(Node));
     Node *prev = data.head;
     char lineFromFile[50];
-    fgets(lineFromFile, 50, fp);
+    fscanf(fp, "%s\n", lineFromFile);
     while(!feof(fp)) {
-        prev->nextPtr = toBeNext;
-        toBeNext->nextPtr = NULL;
-        toBeNext -> prevPtr = prev;
-        strcpy(toBeNext -> data.string, lineFromFile);
-        fgets(lineFromFile, 50, fp);
-        prev = toBeNext;
-        toBeNext = (Node*)malloc(sizeof(Node));
+        if(strcmp("\n", lineFromFile) != 0) {
+            prev->nextPtr = toBeNext;
+            toBeNext->nextPtr = NULL;
+            toBeNext -> prevPtr = prev;
+            strcpy(toBeNext -> data.string, lineFromFile);
+            fscanf(fp, "%s\n", lineFromFile);
+            prev = toBeNext;
+            toBeNext = (Node*)malloc(sizeof(Node));
+        }
     }
     prev->nextPtr = toBeNext;
     toBeNext->nextPtr = NULL;

@@ -30,7 +30,7 @@ void insertElementToList(LinkedListData *data, int indexBefore) {
 }
 
 void printNode(Node* nodeToBePrinted) {
-    printf("%s", nodeToBePrinted->data.string);
+    printf("%s\n", nodeToBePrinted->data.string);
 }
 
 void printList(LinkedListData data) {
@@ -41,12 +41,22 @@ void printList(LinkedListData data) {
     }
 }
 
-
-
-
-void shuffle(LinkedListData *data) {
-    
+void printListBackwards(LinkedListData data) {
+    Node *currNode = data.tail;
+    while (currNode != NULL) {
+        printNode(currNode);
+        currNode = currNode->prevPtr;
+    }
 }
+
+
+void swapNodes(Node *node1, Node *node2) {
+    NodeData temp = node1->data;
+    node1->data = node2->data;
+    node2->data = temp;
+}
+
+
 
 int getLinkedListLength(LinkedListData *data) {
     int returnVal = 0;
@@ -68,18 +78,27 @@ Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
         for(j = 0; j<0/*i-2*/; j++) {
             currNode = currNode->nextPtr;
         }
-        if(i>-1) {
+        if(i>2) {
             currNode->prevPtr->nextPtr = currNode->nextPtr;
             currNode->nextPtr->prevPtr = currNode->prevPtr;
-            currNode->prevPtr = prevNode;
+            prevNode->nextPtr = currNode;
             currNode->prevPtr = prevNode;
             currNode->nextPtr = NULL;
             prevNode = currNode;
-            printList(discardData);
-            printList(drawData);
+            //printList(discardData);
+            //printList(drawData);
         }
     }
+    strcpy(prevNode->data.string, "This is the tail of the Draw Pile");
     return prevNode;
+}
+
+void shuffle(LinkedListData *data) {
+    for(int i = 0; i<getLinkedListLength(data); i++) {
+        Node* node1 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
+        Node* node2 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
+        swapNodes(node1, node2);
+    }
 }
 
 // void swapNodes(LinkedListData *data, int lengthFromHeadToNode1, int lengthFromHeadToNode2) {
