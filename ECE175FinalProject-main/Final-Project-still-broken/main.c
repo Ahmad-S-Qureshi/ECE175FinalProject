@@ -3,12 +3,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "structDefinitions.c"
-#include "./linkedListFunctions.c"
-#include "./fileStuff.c"
+#include "linkedListFunctions.c"
+#include "fileStuff.c"
 
 
 int main() {
-    //Vector List of LinkedListData's to be Implemented
+    //Vector List of LinkedListData's or a dynamically allocated array to be Implemented
 
     LinkedListData discardData;
     initializeData(discardData);
