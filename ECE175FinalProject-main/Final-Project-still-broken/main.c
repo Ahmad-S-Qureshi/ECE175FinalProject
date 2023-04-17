@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "structDefinitions.h"
-#include "./linkedListFunctions.h"
-#include "./fileStuff.h"
+#include "structDefinitions.c"
+#include "./linkedListFunctions.c"
+#include "./fileStuff.c"
 
 
 int main() {
