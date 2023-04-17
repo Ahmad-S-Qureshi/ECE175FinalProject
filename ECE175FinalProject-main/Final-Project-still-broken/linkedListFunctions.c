@@ -79,24 +79,15 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
 
 Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
     Node *prevNode = drawData.head;
-    for(int i = getLinkedListLength(&discardData); i>0; i--) {
+    for(int i = getLinkedListLength(&discardData); i>2; i--) {
         Node *currNode = discardData.head;
         currNode = currNode->nextPtr;
-        //int randNum = (rand()%(i-2)) + 1;
-        int j = 0;
-        for(j = 0; j<0/*i-2*/; j++) {
-            currNode = currNode->nextPtr;
-        }
-        if(i>2) {
-            currNode->prevPtr->nextPtr = currNode->nextPtr;
-            currNode->nextPtr->prevPtr = currNode->prevPtr;
-            prevNode->nextPtr = currNode;
-            currNode->prevPtr = prevNode;
-            currNode->nextPtr = NULL;
-            prevNode = currNode;
-            //printList(discardData);
-            //printList(drawData);
-        }
+        currNode->prevPtr->nextPtr = currNode->nextPtr;
+        currNode->nextPtr->prevPtr = currNode->prevPtr;
+        prevNode->nextPtr = currNode;
+        currNode->prevPtr = prevNode;
+        currNode->nextPtr = NULL;
+        prevNode = currNode;
     }
     strcpy(prevNode->data.string, "This is the tail of the Draw Pile");
     return prevNode;
