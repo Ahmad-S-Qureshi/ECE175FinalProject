@@ -77,6 +77,15 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
     oldNode->prevPtr = newHead; 
 }
 
+void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
+    toBeMoved->prevPtr->prevPtr = toBeMoved->nextPtr;
+    toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
+    Node *tempNext = toData->head->nextPtr;
+    toData->head->nextPtr = toBeMoved;
+    toBeMoved->prevPtr = toData->head;
+    toBeMoved->nextPtr = tempNext;
+}
+
 Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
     Node *prevNode = drawData.head;
     for(int i = getLinkedListLength(&discardData); i>2; i--) {
