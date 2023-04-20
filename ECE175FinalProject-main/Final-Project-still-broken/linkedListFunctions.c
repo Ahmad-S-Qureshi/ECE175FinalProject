@@ -7,14 +7,15 @@ void initializeData(LinkedListData data) {
     data.tail = NULL;
 }
 
-void initializeNode(Node *prevNode, Node *toBeInitialized, char *data) {
+void initializeNode(Node *prevNode, Node *toBeInitialized, char *color, int val) {
     if (prevNode != toBeInitialized) {
         prevNode->nextPtr = toBeInitialized;
     } else {
         prevNode->prevPtr = NULL;
     }
     toBeInitialized->nextPtr = NULL;
-    strcpy((toBeInitialized->data).string, data);
+    strcpy((toBeInitialized->data).color, color);
+    toBeInitialized->data.value = val;
 }
 
 Node *getElementFromIndex(LinkedListData *data, int index) {
@@ -30,7 +31,7 @@ void insertElementToList(LinkedListData *data, int indexBefore) {
 }
 
 void printNode(Node* nodeToBePrinted) {
-    printf("%s\n", nodeToBePrinted->data.string);
+    printf("%d of color %s\n", nodeToBePrinted->data.value, nodeToBePrinted->data.color);
 }
 
 void printList(LinkedListData data) {
@@ -51,7 +52,7 @@ void printListBackwards(LinkedListData data) {
 
 
 void swapNodes(Node *node1, Node *node2) {
-    NodeData temp = node1->data;
+    card temp = node1->data;
     node1->data = node2->data;
     node2->data = temp;
 }
@@ -78,12 +79,11 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
 }
 
 void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
-    toBeMoved->prevPtr->prevPtr = toBeMoved->nextPtr;
+    toBeMoved->prevPtr->nextPtr = toBeMoved->nextPtr;
     toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
-    Node *tempNext = toData->head->nextPtr;
+    toBeMoved->nextPtr = toData->head->nextPtr;
     toData->head->nextPtr = toBeMoved;
     toBeMoved->prevPtr = toData->head;
-    toBeMoved->nextPtr = tempNext;
 }
 
 Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
@@ -98,7 +98,8 @@ Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
         currNode->nextPtr = NULL;
         prevNode = currNode;
     }
-    strcpy(prevNode->data.string, "This is the tail of the Draw Pile");
+    strcpy(prevNode->data.color, "tail discard");
+    prevNode->data.value = -10;
     return prevNode;
 }
 

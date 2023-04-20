@@ -16,24 +16,27 @@ int getNumCards (FILE* fp) {
 Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     Node *toBeNext = (Node*)malloc(sizeof(Node));
     Node *prev = data.head;
-    char lineFromFile[50];
-    fscanf(fp, "%s\n", lineFromFile);
+    char color[10];
+    int value; 
+    fscanf(fp, "%d %s\n", &value, color);
     while(!feof(fp)) {
-        if(strcmp("\n", lineFromFile) != 0) {
+        //if(strcmp("\n", lineFromFile) != 0) {
             prev->nextPtr = toBeNext;
             toBeNext->nextPtr = NULL;
             toBeNext -> prevPtr = prev;
-            strcpy(toBeNext -> data.string, lineFromFile);
-            fscanf(fp, "%s\n", lineFromFile);
+            strcpy(toBeNext -> data.color, color);
+            toBeNext->data.value=value;
+            fscanf(fp, "%d %s\n", &value, color);
             prev = toBeNext;
             toBeNext = (Node*)malloc(sizeof(Node));
-        }
+        //}
     }
     prev->nextPtr = toBeNext;
     toBeNext->nextPtr = NULL;
     toBeNext -> prevPtr = prev;
-    strcpy(toBeNext -> data.string, lineFromFile);
-    fgets(lineFromFile, 50, fp);
+    strcpy(toBeNext -> data.color, color);
+    toBeNext->data.value = value;
+    fscanf(fp, "%d %s\n", &value, color);
     prev = toBeNext;
     toBeNext = (Node*)malloc(sizeof(Node));
     toBeNext->prevPtr = prev;

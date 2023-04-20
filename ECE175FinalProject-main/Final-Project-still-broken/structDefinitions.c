@@ -1,12 +1,15 @@
-typedef struct nodeData{
-    char string[50];
-} NodeData;
+typedef struct card_s {
+    char color[10];
+    int value;
+    char action[15];
+    struct card_s *pt;
+} card;
 
 
 typedef struct node {
     struct node *prevPtr;
     struct node *nextPtr;
-    NodeData data;
+    card data;
 } Node;
 
 typedef struct linkedListData {
