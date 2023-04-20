@@ -35,15 +35,36 @@ void insertElementToList(LinkedListData *data, int indexBefore) {
 
 // Prints data within a node
 void printNode(Node* nodeToBePrinted) {
-    printf("%d of color %s\n", nodeToBePrinted->data.value, nodeToBePrinted->data.color);
+    if(strcmp(nodeToBePrinted->data.color, "Yellow") == 0) {
+        printf("\e[0;33m");
+    } else if (strcmp(nodeToBePrinted->data.color, "Red") == 0){
+        printf("\e[0;31m");
+    } else if (strcmp(nodeToBePrinted->data.color, "Green") == 0){
+        printf("\e[0;32m");
+    } else if (strcmp(nodeToBePrinted->data.color, "Blue") == 0) {
+        printf("\e[0;34m");
+    } else {
+        printf("\e[0;37m");
+    }
+    
+    
+    if(nodeToBePrinted->data.value >0) {
+        printf("\n-----------------\n|\t\t|\n|\t\t|\n|\t\t|\n|\t\t|\n|\t%d\t|\n|\t\t|\n|\t\t|\n|\t\t|\n-----------------\n\n\n", nodeToBePrinted->data.value);
+    } else {
+        printf("-----------------\n|\t\t|\n|\t\t|\n|\t\t|\n|\t\t|\n|\t%c\t|\n|\t\t|\n|\t\t|\n|\t\t|\n-----------------\n\n\n", '#');
+    }
 }
 
 // Iterates across an entire list and prints it
 void printList(LinkedListData data) {
     Node *currNode = data.head;
     while (currNode != NULL) {
-        
+        if(currNode->data.value >=0) {
+            printNode(currNode);
+        }
+        currNode = currNode->nextPtr;
     }
+    printf("\e[0m");
 }
 
 // Prints a list backwards in case we want to, ensures backwards links

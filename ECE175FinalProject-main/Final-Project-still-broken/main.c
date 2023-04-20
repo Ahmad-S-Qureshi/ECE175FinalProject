@@ -15,15 +15,33 @@ int main() {
 
         bool roundComplete = false;
         // Game Prep goes here
+
         // Move two cards for the two discard piles (making two linked lists)
         // initialize file into discard
         // move discard into draw
         // Deal cards
 
+        LinkedListData discardData;
+        initializeData(discardData);
+        FILE* fp = fopen("listOfCards.txt", "r");
+        Node discardHeadNode;
+        initializeNode(&discardHeadNode, &discardHeadNode, "head discard", -2);
+        discardData.head = &discardHeadNode;
+        discardData.tail = initializeLinkedListFromFile(discardData, fp);
+        strcpy((discardData.tail)->data.color, "tail discard");
+        discardData.tail->data.value = -5;
+
+        // printf("Printing LinkedList Forward\n");
+        shuffle(&discardData);
+        printList(discardData);
+
         while (!roundComplete){
             
             /* game code goes here */
             roundComplete = true;
+            
+    
+            LinkedListData drawData;
             // Rotate around for each turn
             // Sort hands (extra credit but seems ez since we have a node swap)
             // Print hand using print list
@@ -37,7 +55,7 @@ int main() {
         // Prompt to replay, set to true if not going to replay
         closed = true;
     }
-    
+    return 0;
     //overall cleanup goes here
     // Return 0 at end
     // return 0;
@@ -46,7 +64,7 @@ int main() {
 
     LinkedListData discardData;
     initializeData(discardData);
-    FILE* fp = fopen("listOfCardsTester.txt", "r");
+    FILE* fp = fopen("listOfCards.txt", "r");
     Node discardHeadNode;
     initializeNode(&discardHeadNode, &discardHeadNode, "head discard", -2);
     discardData.head = &discardHeadNode;
@@ -66,22 +84,7 @@ int main() {
     //printNode(getElementFromIndex(&discardData, 0));
     //printNode(getElementFromIndex(&discardData, getLinkedListLength(&discardData)-1));
 
-    printf("%d\n", getLinkedListLength(&discardData));
     
-    LinkedListData drawData;
-    initializeData(drawData);
-    Node drawHeadNode;
-    initializeNode(&drawHeadNode, &drawHeadNode, "head draw", -2);
-    drawData.head = &drawHeadNode;
-    drawData.tail = moveDiscardToDraw(discardData, drawData);
-    printf("\n\n\n");
-    printList(drawData);
-    printf("A total of %d cards\n", getLinkedListLength(&drawData));
-
-    shuffle(&drawData);
-    printf("\n\n\n");
-    printList(drawData);
-    printf("A total of %d cards\n", getLinkedListLength(&drawData));
 
     
     
