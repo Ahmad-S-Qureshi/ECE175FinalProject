@@ -14,16 +14,26 @@ int main() {
     while(!closed) {
 
         bool roundComplete = false;
-        //Game Prep goes here
+        // Game Prep goes here
+        // Move two cards for the two discard piles (making two linked lists)
+        // initialize file into discard
+        // move discard into draw
+        // Deal cards
 
         while (!roundComplete){
             
             /* game code goes here */
             roundComplete = true;
+            // Rotate around for each turn
+            // Sort hands (extra credit but seems ez since we have a node swap)
+            // Print hand using print list
+            // Manage movement onto the discard and drawing from the draw pile
+
         }
 
         //Game Cleanup goes here
         closed = true;
+        // free every space in memory and vanish every linked list
     }
     
     //overall cleanup goes here
