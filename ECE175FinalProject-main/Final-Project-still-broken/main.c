@@ -10,6 +10,25 @@
 
 int main() {
     srand((int)time(NULL));
+    bool closed = false;
+    while(!closed) {
+
+        bool roundComplete = false;
+        //Game Prep goes here
+
+        while (!roundComplete){
+            
+            /* game code goes here */
+            roundComplete = true;
+        }
+
+        //Game Cleanup goes here
+        closed = true;
+    }
+    
+    //overall cleanup goes here
+    return 0;
+
     //Vector List of LinkedListData's or a dynamically allocated array to be Implemented
 
     LinkedListData discardData;
