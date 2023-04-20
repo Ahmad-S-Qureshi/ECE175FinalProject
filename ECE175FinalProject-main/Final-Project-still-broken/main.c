@@ -46,6 +46,11 @@ int main() {
     printList(drawData);
     printf("A total of %d cards\n", getLinkedListLength(&drawData));
 
+    shuffle(&drawData);
+    printf("\n\n\n");
+    printList(drawData);
+    printf("A total of %d cards\n", getLinkedListLength(&drawData));
+
     
     
     // printf("\n\n\nNow shuffled\n");

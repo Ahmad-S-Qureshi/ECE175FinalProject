@@ -106,10 +106,12 @@ Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
 }
 
 void shuffle(LinkedListData *data) {
-    for(int i = 0; i<getLinkedListLength(data); i++) {
-        Node* node1 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
-        Node* node2 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
-        swapNodes(node1, node2);
+    for(int timesToShuffle = 0; timesToShuffle<50; timesToShuffle++) {
+        for(int i = 0; i<getLinkedListLength(data); i++) {
+            Node* node1 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
+            Node* node2 = getElementFromIndex(data, rand()%(getLinkedListLength(data)-2) + 1);
+            swapNodes(node1, node2);
+        }
     }
 }
 

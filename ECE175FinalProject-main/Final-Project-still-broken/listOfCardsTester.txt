@@ -1,6 +1,6 @@
-1 Yellow
-1 Yellow
-1 Yellow
+1 Yellow1
+1 Yellow2
+1 Yellow3
 3 Yellow
 2 Wild1
 2 Wild2
