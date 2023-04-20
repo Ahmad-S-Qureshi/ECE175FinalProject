@@ -19,8 +19,8 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     char color[10];
     int value; 
     fscanf(fp, "%d %s\n", &value, color);
-    while(!feof(fp)) {
-        //if(strcmp("\n", lineFromFile) != 0) {
+    while(strcmp(color, "Tail") != 0) {
+        if(strcmp("\n", color) != 0) {
             prev->nextPtr = toBeNext;
             toBeNext->nextPtr = NULL;
             toBeNext -> prevPtr = prev;
@@ -29,18 +29,11 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
             fscanf(fp, "%d %s\n", &value, color);
             prev = toBeNext;
             toBeNext = (Node*)malloc(sizeof(Node));
-        //}
+        }
     }
-    prev->nextPtr = toBeNext;
-    toBeNext->nextPtr = NULL;
-    toBeNext -> prevPtr = prev;
-    strcpy(toBeNext -> data.color, color);
-    toBeNext->data.value = value;
-    fscanf(fp, "%d %s\n", &value, color);
-    prev = toBeNext;
-    toBeNext = (Node*)malloc(sizeof(Node));
     toBeNext->prevPtr = prev;
     prev->nextPtr = toBeNext;
+    toBeNext->nextPtr=NULL;
     fclose(fp);
     fp = fopen("listOfCards.txt", "r");
     return toBeNext;

@@ -66,7 +66,7 @@ int getLinkedListLength(LinkedListData *data) {
         returnVal++;
         temp = temp->nextPtr;
     }
-    return returnVal ;
+    return returnVal;
 }
 
 Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newListData, Node *oldNode) {
@@ -98,7 +98,9 @@ Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
         currNode->nextPtr = NULL;
         prevNode = currNode;
     }
-    strcpy(prevNode->data.color, "tail discard");
+    discardData.tail->prevPtr=prevNode;
+    prevNode->nextPtr = discardData.tail;
+    strcpy(discardData.tail->data.color, "tail draw");
     prevNode->data.value = -10;
     return prevNode;
 }
