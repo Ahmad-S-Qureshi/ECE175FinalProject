@@ -32,8 +32,10 @@ int main() {
         }
 
         //Game Cleanup goes here
-        closed = true;
+        
         // free every space in memory and vanish every linked list
+        // Prompt to replay, set to true if not going to replay
+        closed = true;
     }
     
     //overall cleanup goes here
