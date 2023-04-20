@@ -37,7 +37,8 @@ int main() {
     }
     
     //overall cleanup goes here
-    return 0;
+    // Return 0 at end
+    // return 0;
 
     //Vector List of LinkedListData's or a dynamically allocated array to be Implemented
 

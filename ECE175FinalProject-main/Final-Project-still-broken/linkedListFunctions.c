@@ -37,7 +37,9 @@ void printNode(Node* nodeToBePrinted) {
 void printList(LinkedListData data) {
     Node *currNode = data.head;
     while (currNode != NULL) {
-        printNode(currNode);
+        if(currNode->data.value >=0) {
+            printNode(currNode);
+        }
         currNode = currNode->nextPtr;
     }
 }
