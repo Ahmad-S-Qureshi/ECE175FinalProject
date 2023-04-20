@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
-
+// Sets head and tail to null, not necessary but seemed to help
 void initializeData(LinkedListData data) {
     data.head = NULL;
     data.tail = NULL;
 }
 
+// Initializes a node with data, only used by head nodes
 void initializeNode(Node *prevNode, Node *toBeInitialized, char *color, int val) {
     if (prevNode != toBeInitialized) {
         prevNode->nextPtr = toBeInitialized;
@@ -18,6 +19,7 @@ void initializeNode(Node *prevNode, Node *toBeInitialized, char *color, int val)
     toBeInitialized->data.value = val;
 }
 
+// Iterates through a list and grabs a node at the n-th index
 Node *getElementFromIndex(LinkedListData *data, int index) {
     Node *currNode = data->head;
     for(int i = 0; i < index; i++) {
@@ -26,16 +28,27 @@ Node *getElementFromIndex(LinkedListData *data, int index) {
     return currNode;
 }
 
+// Unnessesary? We seem to just need to swap
 void insertElementToList(LinkedListData *data, int indexBefore) {
     
 }
 
+// Prints data within a node
 void printNode(Node* nodeToBePrinted) {
     printf("%d of color %s\n", nodeToBePrinted->data.value, nodeToBePrinted->data.color);
 }
 
+// Iterates across an entire list and prints it
 void printList(LinkedListData data) {
     Node *currNode = data.head;
+    while (currNode != NULL) {
+        
+    }
+}
+
+// Prints a list backwards in case we want to, ensures backwards links
+void printListBackwards(LinkedListData data) {
+    Node *currNode = data.tail;
     while (currNode != NULL) {
         if(currNode->data.value >=0) {
             printNode(currNode);
@@ -44,23 +57,14 @@ void printList(LinkedListData data) {
     }
 }
 
-void printListBackwards(LinkedListData data) {
-    Node *currNode = data.tail;
-    while (currNode != NULL) {
-        printNode(currNode);
-        currNode = currNode->prevPtr;
-    }
-}
-
-
+// Just swaps the data, that's it
 void swapNodes(Node *node1, Node *node2) {
     card temp = node1->data;
     node1->data = node2->data;
     node2->data = temp;
 }
 
-
-
+// Iterates until null and returns length of list
 int getLinkedListLength(LinkedListData *data) {
     int returnVal = 0;
     Node *temp = data->head;
@@ -71,6 +75,7 @@ int getLinkedListLength(LinkedListData *data) {
     return returnVal;
 }
 
+// Moves a node into another linked list, to be used in gameplay
 Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newListData, Node *oldNode) {
     oldNode->prevPtr->nextPtr = oldNode->nextPtr;
     oldNode->nextPtr->prevPtr = oldNode->prevPtr;
@@ -80,6 +85,7 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
     oldNode->prevPtr = newHead; 
 }
 
+// idk if this or the above works
 void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
     toBeMoved->prevPtr->nextPtr = toBeMoved->nextPtr;
     toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
@@ -88,6 +94,7 @@ void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved)
     toBeMoved->prevPtr = toData->head;
 }
 
+// Moves entire discard pile to draw pile, merge discards beforehand
 Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
     Node *prevNode = drawData.head;
     for(int i = getLinkedListLength(&discardData); i>2; i--) {
@@ -107,6 +114,7 @@ Node *moveDiscardToDraw(LinkedListData discardData, LinkedListData drawData) {
     return prevNode;
 }
 
+// Shuffles the deck 50 times because why not
 void shuffle(LinkedListData *data) {
     for(int timesToShuffle = 0; timesToShuffle<50; timesToShuffle++) {
         for(int i = 0; i<getLinkedListLength(data); i++) {
@@ -117,6 +125,7 @@ void shuffle(LinkedListData *data) {
     }
 }
 
+//Lame
 // void swapNodes(LinkedListData *data, int lengthFromHeadToNode1, int lengthFromHeadToNode2) {
 //     Node *node1 = data->head;
 //     for(int i = 0; i<lengthFromHeadToNode1; i++) {
