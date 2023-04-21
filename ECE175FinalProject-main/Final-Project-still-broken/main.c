@@ -19,9 +19,9 @@ int main() {
         printf("Invalid number of players, try again: ");
         scanf("%d", &numPlayers);
     }
-    LinkedListData playerHands[numPlayers];
+    PlayerHand playerHands[numPlayers];
     for(int i = 0; i < numPlayers; i++) {
-        initializeData(playerHands[i]);
+        initializeData(playerHands[i].dataStorage);
         Node* currPlayerHeadNode = (Node*)malloc(sizeof(Node));
         char playerHeadNodeText[15];
         strcpy(playerHeadNodeText, "head player");
@@ -33,19 +33,19 @@ int main() {
         strcpy(playerTailNodeText, "tail player");
         playerTailNodeText[strlen(playerTailNodeText) + 1] ='\0';
         playerTailNodeText[strlen(playerTailNodeText)] = i + '0';
-        playerHands[i].tail = currPlayerTailNode;
-        playerHands[i].head = currPlayerHeadNode;
+        playerHands[i].dataStorage.tail = currPlayerTailNode;
+        playerHands[i].dataStorage.head = currPlayerHeadNode;
         strcpy(currPlayerTailNode->data.color, playerHeadNodeText);
         currPlayerTailNode->data.value = -5;
         currPlayerHeadNode->nextPtr = currPlayerTailNode;
         currPlayerTailNode->prevPtr = currPlayerHeadNode;
     }
     for(int i = 0; i<numPlayers; i++) {
-        printList(playerHands[i]);
+        printList(playerHands[i].dataStorage);
         printf("Player %d initialized\n", i + 1);
     }
     while(!closed) {
-
+        int currPlayer = 0;
         bool roundComplete = false;
         // Game Prep goes here
         
@@ -73,14 +73,14 @@ int main() {
         initializeData(drawData);
         for(int currPlayerIndex = 0; currPlayerIndex<numPlayers; currPlayerIndex++) {
             for(int initialDealAmount = 0; initialDealAmount < 7; initialDealAmount++) {
-                drawFromDrawPile(playerHands[currPlayerIndex], drawData);
+                drawFromDrawPile(playerHands[currPlayerIndex].dataStorage, drawData);
             }
         }
-        for(int i = 0; i<numPlayers; i++) {
-            printf("Printing player %d's cards\n", i+1);
-            printList(playerHands[i]);
-        }
-        //printList(discardData);
+        // for(int i = 0; i<numPlayers; i++) {
+        //     //printf("Printing player %d's cards\n", i+1);
+        //     //printList(playerHands[i]);
+        // }
+        // //printList(discardData);
 
         while (!roundComplete){
             
@@ -88,20 +88,35 @@ int main() {
             roundComplete = true;
             
     
-            LinkedListData drawData;
             // Rotate around for each turn
             // Sort hands (extra credit but seems ez since we have a node swap)
             // Print hand using print list
             // Manage movement onto the discard and drawing from the draw pile
 
         }
-
+        for(int i = 0; i<numPlayers; i++) {
+            //printf("Printing player %d's cards\n", i+1);
+            //printList(playerHands[i]);
+        }
         //Game Cleanup goes here
         
-        // free every space in memory and vanish every linked list
+        // free every space in memory and vanish every value in the linked lists
         // Prompt to replay, set to true if not going to replay
-        if(i>1) {
-            closed = true;
+        for(int handToPrint = 0; handToPrint < numPlayers; handToPrint++) {
+            printList(playerHands[handToPrint].dataStorage);
+        }
+        for(int handToEmpty = 0; handToEmpty<numPlayers; handToEmpty++) {
+            emptyList(playerHands[handToEmpty].dataStorage);
+        }
+        emptyList(drawData);
+        emptyList(discardData);
+        
+        for(int playerIndex = 0; playerIndex<numPlayers; playerIndex++) {
+            if(sumHand(playerHands[playerIndex]) >= 200) {
+                closed = true;
+                printf("Player %d Wins!\n", playerIndex+1);
+                break;
+            }
         }
         i++;
     }

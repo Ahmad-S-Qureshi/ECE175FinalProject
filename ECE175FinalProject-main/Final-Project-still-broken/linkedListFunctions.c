@@ -85,6 +85,24 @@ void swapNodes(Node *node1, Node *node2) {
     node2->data = temp;
 }
 
+int getSumOfHand(LinkedListData data) {
+    Node *currNode = data.head;
+    int returnVal;
+    while (currNode != NULL) {
+        if(currNode->data.value >=0) {
+            if(currNode->data.value > 0 && currNode->data.value != 2) {
+                returnVal+=currNode->data.value;
+            } else if (currNode->data.value == 2) {
+                returnVal += 40;
+            } else if (currNode->data.value == 0) {
+                returnVal +=10;
+            }
+        }
+        currNode = currNode->nextPtr;
+    }
+    printf("\e[0m");
+}
+
 // Iterates until null and returns length of list
 int getLinkedListLength(LinkedListData *data) {
     int returnVal = 0;
@@ -150,12 +168,33 @@ void drawFromDrawPile(LinkedListData playerHand, LinkedListData drawData) {
     moveNode(&drawData, &playerHand, drawData.head->nextPtr);
 }
 
-void updateListss(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+void updateLists(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
 
+}
+
+void emptyList(LinkedListData toBeVanished) {
+    Node *currNode = toBeVanished.head;
+    Node *prevNode = toBeVanished.head;
+    currNode = currNode->nextPtr;
+    while (currNode != NULL) {
+        if(prevNode->data.value >=0) {
+            free(prevNode);
+        }
+        prevNode = currNode;
+        currNode = currNode->nextPtr;
+    }
+    toBeVanished.head->nextPtr=toBeVanished.tail;
+    toBeVanished.head->prevPtr = NULL;
+    toBeVanished.tail->prevPtr=toBeVanished.head;
+    toBeVanished.tail->nextPtr = NULL;
 }
 
 void turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
 
+}
+
+void updateScore(PlayerHand winner, LinkedListData aLoser) {
+    winner.score+=getSumOfHand(aLoser);
 }
 
 //Lame

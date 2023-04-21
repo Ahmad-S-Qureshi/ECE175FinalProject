@@ -16,3 +16,8 @@ typedef struct linkedListData {
     Node* head;
     Node* tail;
 } LinkedListData;
+
+typedef struct playerHand {
+    LinkedListData dataStorage;
+    int score;
+} PlayerHand;
