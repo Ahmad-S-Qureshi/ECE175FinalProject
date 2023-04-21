@@ -186,7 +186,7 @@ int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlaying
         moveToOtherLinkedList(&playerHand, &playPiles, &moveVal1);
         return 0;
     } else {
-        printf("Invalid move, try again!\n")
+        printf("Invalid move, try again!\n");
         return -1;
     }
 }
