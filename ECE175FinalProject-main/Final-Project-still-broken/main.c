@@ -85,6 +85,7 @@ int main() {
         while (!roundComplete){
             
             /* game code goes here */
+            int numCardsLeft = turn();
             roundComplete = true;
             
     

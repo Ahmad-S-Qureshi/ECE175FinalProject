@@ -190,7 +190,9 @@ void emptyList(LinkedListData toBeVanished) {
 }
 
 void turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
-
+    //blah blah logic
+    updateLists(playerHand, discardPlayingOn, moveVal1, moveVal2);
+    return getLinkedListLength(&playerHand);
 }
 
 void updateScore(PlayerHand winner, LinkedListData aLoser) {
