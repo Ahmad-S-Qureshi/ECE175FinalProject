@@ -106,7 +106,7 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
     oldNode->prevPtr = newHead; 
 }
 
-// idk if this or the above works
+// idk if this or the above works UPDATE: both work
 void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
     toBeMoved->prevPtr->nextPtr = toBeMoved->nextPtr;
     toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
@@ -144,6 +144,18 @@ void shuffle(LinkedListData *data) {
             swapNodes(node1, node2);
         }
     }
+}
+
+void drawFromDrawPile(LinkedListData playerHand, LinkedListData drawData) {
+    moveNode(&drawData, &playerHand, drawData.head->nextPtr);
+}
+
+void updateListss(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+
+}
+
+void turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+
 }
 
 //Lame

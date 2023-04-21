@@ -11,10 +11,44 @@
 int main() {
     srand((int)time(NULL));
     bool closed = false;
+    int i=0;
+    printf("Enter the number of players (2-6) planning to play: ");
+    int numPlayers;
+    scanf("%d", &numPlayers);
+    while (numPlayers < 2 || numPlayers > 6) {
+        printf("Invalid number of players, try again: ");
+        scanf("%d", &numPlayers);
+    }
+    LinkedListData playerHands[numPlayers];
+    for(int i = 0; i < numPlayers; i++) {
+        initializeData(playerHands[i]);
+        Node* currPlayerHeadNode = (Node*)malloc(sizeof(Node));
+        char playerHeadNodeText[15];
+        strcpy(playerHeadNodeText, "head player");
+        playerHeadNodeText[strlen(playerHeadNodeText) + 1] ='\0';
+        playerHeadNodeText[strlen(playerHeadNodeText)] = i + '0';
+        initializeNode(currPlayerHeadNode, currPlayerHeadNode, playerHeadNodeText, -2);
+        Node* currPlayerTailNode = (Node*)malloc(sizeof(Node));
+        char playerTailNodeText[15];
+        strcpy(playerTailNodeText, "tail player");
+        playerTailNodeText[strlen(playerTailNodeText) + 1] ='\0';
+        playerTailNodeText[strlen(playerTailNodeText)] = i + '0';
+        playerHands[i].tail = currPlayerTailNode;
+        playerHands[i].head = currPlayerHeadNode;
+        strcpy(currPlayerTailNode->data.color, playerHeadNodeText);
+        currPlayerTailNode->data.value = -5;
+        currPlayerHeadNode->nextPtr = currPlayerTailNode;
+        currPlayerTailNode->prevPtr = currPlayerHeadNode;
+    }
+    for(int i = 0; i<numPlayers; i++) {
+        printList(playerHands[i]);
+        printf("Player %d initialized\n", i + 1);
+    }
     while(!closed) {
 
         bool roundComplete = false;
         // Game Prep goes here
+        
 
         // Move two cards for the two discard piles (making two linked lists)
         // initialize file into discard
@@ -30,10 +64,23 @@ int main() {
         discardData.tail = initializeLinkedListFromFile(discardData, fp);
         strcpy((discardData.tail)->data.color, "tail discard");
         discardData.tail->data.value = -5;
-
-        // printf("Printing LinkedList Forward\n");
         shuffle(&discardData);
-        printList(discardData);
+        LinkedListData drawData;
+        Node drawHeadNode;
+        initializeNode(&drawHeadNode, &drawHeadNode, "head draw", -2);
+        drawData.head = &drawHeadNode;
+        drawData.tail = moveDiscardToDraw(discardData, drawData);
+        initializeData(drawData);
+        for(int currPlayerIndex = 0; currPlayerIndex<numPlayers; currPlayerIndex++) {
+            for(int initialDealAmount = 0; initialDealAmount < 7; initialDealAmount++) {
+                drawFromDrawPile(playerHands[currPlayerIndex], drawData);
+            }
+        }
+        for(int i = 0; i<numPlayers; i++) {
+            printf("Printing player %d's cards\n", i+1);
+            printList(playerHands[i]);
+        }
+        //printList(discardData);
 
         while (!roundComplete){
             
@@ -53,7 +100,10 @@ int main() {
         
         // free every space in memory and vanish every linked list
         // Prompt to replay, set to true if not going to replay
-        closed = true;
+        if(i>1) {
+            closed = true;
+        }
+        i++;
     }
     return 0;
     //overall cleanup goes here
