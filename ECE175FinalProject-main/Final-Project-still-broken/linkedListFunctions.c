@@ -58,8 +58,11 @@ void printNode(Node* nodeToBePrinted) {
 // Iterates across an entire list and prints it
 void printList(LinkedListData data) {
     Node *currNode = data.head;
+    int cardNum = 1;
     while (currNode != NULL) {
         if(currNode->data.value >=0) {
+            printf("Card Number %d\n", cardNum);
+            cardNum++;
             printNode(currNode);
         }
         currNode = currNode->nextPtr;
@@ -168,7 +171,11 @@ void drawFromDrawPile(LinkedListData playerHand, LinkedListData drawData) {
     moveNode(&drawData, &playerHand, drawData.head->nextPtr);
 }
 
-void updateLists(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+void updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
+
+}
+
+void updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1) {
 
 }
 
@@ -189,9 +196,40 @@ void emptyList(LinkedListData toBeVanished) {
     toBeVanished.tail->nextPtr = NULL;
 }
 
-int turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawData) {
     //blah blah logic
-    updateLists(playerHand, discardPlayingOn, moveVal1, moveVal2);
+    
+    printf("Now playing on:\n");
+    printNode(&discardPlayingOn);
+    printf("Your cards are as follows: ");
+    printList(playerHand);
+    bool playPileComplete = false;
+
+    while (!playPileComplete){
+        int cardsToPlay = 0;
+        printf("Enter how many cards you want to play on this card, 0 (draw), 1, or 2: ");
+        scanf("%d", &cardsToPlay);
+
+        if(cardsToPlay == 2) {
+            int nodeIndex1 = 0;
+            int nodeIndex2 = 0;
+            printf("Enter the two cards in this form \"1 and 2\": ");
+            scanf("%d and %d", &nodeIndex1, &nodeIndex2);
+            updateListsForTurnWithTwoCards(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex1), *getElementFromIndex(&playerHand, nodeIndex2));
+            playPileComplete = true;
+        } else if (cardsToPlay == 1){
+            int nodeIndex = 0;
+            printf("Enter the card in this form \"1\":");
+            scanf("%d", &nodeIndex);playPileComplete = true;
+            updateListsForTurnWithOneCard(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex));
+            playPileComplete = true;
+        } else if (cardsToPlay == 0) {
+            drawFromDrawPile(playerHand, drawData);
+            playPileComplete = true;
+        } else {
+            printf("Invalid Input, try again \n");
+        }
+    }
     return getLinkedListLength(&playerHand);
 }
 

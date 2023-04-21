@@ -11,7 +11,6 @@
 int main() {
     srand((int)time(NULL));
     bool closed = false;
-    int i=0;
     printf("Enter the number of players (2-6) planning to play: ");
     int numPlayers;
     scanf("%d", &numPlayers);
@@ -73,11 +72,24 @@ int main() {
         initializeData(drawData);
         LinkedListData playPiles;
         initializeData(playPiles);
+        playPiles.head = (Node*)malloc(sizeof(Node));
+        playPiles.tail = (Node*)malloc(sizeof(Node));
+        playPiles.head->nextPtr = playPiles.tail;
+        playPiles.tail->prevPtr = playPiles.head;
+        playPiles.tail->nextPtr=NULL;
+        playPiles.head->prevPtr=NULL;
+        strcpy(playPiles.head->data.color, "head");
+        playPiles.head->data.value = -2;
+        playPiles.tail->data.value=-5;
+        for(int i = 0; i < 2; i++) {
+            drawFromDrawPile(playPiles, drawData);
+        }
         
         for(int currPlayerIndex = 0; currPlayerIndex<numPlayers; currPlayerIndex++) {
             for(int initialDealAmount = 0; initialDealAmount < 7; initialDealAmount++) {
                 drawFromDrawPile(playerHands[currPlayerIndex].dataStorage, drawData);
             }
+            true == true;
         }
         // for(int i = 0; i<numPlayers; i++) {
         //     //printf("Printing player %d's cards\n", i+1);
@@ -86,9 +98,20 @@ int main() {
         // //printList(discardData);
 
         while (!roundComplete){
-            
+            currPlayer = currPlayer%numPlayers;
+            printf("Now Player %d's turn! Hand the computer to them and press enter! ", currPlayer + 1);
+            char randomNothing;
+            scanf("%*c%c", &randomNothing);
+            int numCardsLeft = 200;
+            Node *nodePlayingOn = playPiles.head->nextPtr; 
+            int numCardPlayingOn = getLinkedListLength(&playPiles) - 2;
+            printf("There are %d cards to play on\n", getLinkedListLength(&playPiles) - 2);
+            for (int i = 0; i<numCardPlayingOn && numCardsLeft != 0; i++) {
+                numCardsLeft = turns(playerHands[currPlayer].dataStorage, *nodePlayingOn, drawData);
+                nodePlayingOn=nodePlayingOn->nextPtr;
+            }
             /* game code goes here */
-            int numCardsLeft = turns(playerHands[currPlayer].dataStorage, discardPlayingOn, moveVal1, moveVal2);
+            
             currPlayer++;
             if(numCardsLeft == 0) {
                 roundComplete = true;
@@ -119,13 +142,12 @@ int main() {
         emptyList(discardData);
         
         for(int playerIndex = 0; playerIndex<numPlayers; playerIndex++) {
-            if(sumHand(playerHands[playerIndex]) >= 200) {
+            if(getSumOfHand(playerHands[playerIndex].dataStorage) >= 200) {
                 closed = true;
                 printf("Player %d Wins!\n", playerIndex+1);
                 break;
             }
         }
-        i++;
     }
     return 0;
     //overall cleanup goes here
