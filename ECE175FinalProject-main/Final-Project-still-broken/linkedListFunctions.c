@@ -171,12 +171,24 @@ void drawFromDrawPile(LinkedListData playerHand, LinkedListData drawData) {
     moveNode(&drawData, &playerHand, drawData.head->nextPtr);
 }
 
-void updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
+int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
 
 }
 
-void updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1) {
-
+//Return 1 if color match, 0 if not color match but valid move, -1 if invalid move
+int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, LinkedListData playPiles) {
+    if((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1.data.color, discardPlayingOn.data.color) == 0) {
+        printf("Single Color Match!\n");
+        moveToOtherLinkedList(&playerHand, &playPiles, &moveVal1);
+        return 1;
+    } else if (moveVal1.data.value == discardPlayingOn.data.value){
+        printf("Move processed successfully\n");
+        moveToOtherLinkedList(&playerHand, &playPiles, &moveVal1);
+        return 0;
+    } else {
+        printf("Invalid move, try again!\n")
+        return -1;
+    }
 }
 
 void emptyList(LinkedListData toBeVanished) {
