@@ -189,7 +189,7 @@ void emptyList(LinkedListData toBeVanished) {
     toBeVanished.tail->nextPtr = NULL;
 }
 
-void turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
+int turns(LinkedListData playerHand, LinkedListData discardPlayingOn, Node moveVal1, Node moveVal2) {
     //blah blah logic
     updateLists(playerHand, discardPlayingOn, moveVal1, moveVal2);
     return getLinkedListLength(&playerHand);

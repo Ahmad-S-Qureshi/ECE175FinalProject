@@ -71,6 +71,9 @@ int main() {
         drawData.head = &drawHeadNode;
         drawData.tail = moveDiscardToDraw(discardData, drawData);
         initializeData(drawData);
+        LinkedListData playPiles;
+        initializeData(playPiles);
+        
         for(int currPlayerIndex = 0; currPlayerIndex<numPlayers; currPlayerIndex++) {
             for(int initialDealAmount = 0; initialDealAmount < 7; initialDealAmount++) {
                 drawFromDrawPile(playerHands[currPlayerIndex].dataStorage, drawData);
@@ -85,8 +88,11 @@ int main() {
         while (!roundComplete){
             
             /* game code goes here */
-            int numCardsLeft = turn();
-            roundComplete = true;
+            int numCardsLeft = turns(playerHands[currPlayer].dataStorage, discardPlayingOn, moveVal1, moveVal2);
+            currPlayer++;
+            if(numCardsLeft == 0) {
+                roundComplete = true;
+            }
             
     
             // Rotate around for each turn
