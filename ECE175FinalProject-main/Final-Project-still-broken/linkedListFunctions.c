@@ -57,6 +57,7 @@ void printNode(Node* nodeToBePrinted) {
     } else {
         printf("-----------------\n|\t\t|\n|\t\t|\n|\t\t|\n|\t\t|\n|\t%c\t|\n|\t\t|\n|\t\t|\n|\t\t|\n-----------------\n\n\n", '#');
     }
+    printf("\e[0m");
 }
 
 // Iterates across an entire list and prints it
@@ -235,6 +236,7 @@ int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlaying
         printf("Moving This card\n");
         printNode(getElementFromIndex(&playerHand, cardToMoveIndex));
         //swapNodes(playerHand.head->nextPtr, moveVal1);
+        playPiles.head->nextPtr->data.value = -3;
         swapNodes(playPiles.head->nextPtr, getElementFromIndex(&playerHand, cardToMoveIndex));
         
         //drawFromDrawPile(discardPile, playPiles);
