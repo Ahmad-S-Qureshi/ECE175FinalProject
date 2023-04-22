@@ -187,8 +187,8 @@ int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlaying
         return 1;
     } else if ((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0)){
         printf("Move processed successfully\n");
-        swapNodes(playerHand.head->nextPtr, &moveVal1);
-        swapNodes(playPiles.head->nextPtr, &discardPlayingOn);
+        swapNodes(playerHand.head->nextPtr, &moveVal1); //Works
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn); //
         drawFromDrawPile(discardPile, playerHand);
         drawFromDrawPile(discardPile, playPiles);
         return 0;
@@ -236,10 +236,11 @@ int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawD
             scanf("%d and %d", &nodeIndex1, &nodeIndex2);
             updateListsForTurnWithTwoCards(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex1), *getElementFromIndex(&playerHand, nodeIndex2));
             playPileComplete = true;
-        } else if (cardsToPlay == 1){
+        } else if (cardsToPlay == 1) {
             int nodeIndex = 0;
             printf("Enter the card in this form \"1\":");
             scanf("%d", &nodeIndex);
+            
             if(updateListsForTurnWithOneCard(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex), playPiles, discardData) >= 0){
                 playPileComplete = true;
             }
