@@ -172,8 +172,12 @@ void drawFromDrawPile(LinkedListData playerHand, LinkedListData drawData) {
     moveNode(&drawData, &playerHand, drawData.head->nextPtr);
 }
 
-int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
+int turnValid(Node moveVal1, Node moveVal2, Node discardPlayingOn) {
+    
+}
 
+int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
+    
 }
 
 //Return 1 if color match, 0 if not color match but valid move, -1 if invalid move
