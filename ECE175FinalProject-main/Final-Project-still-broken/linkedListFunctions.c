@@ -177,19 +177,19 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
 }
 
 //Return 1 if color match, 0 if not color match but valid move, -1 if invalid move
-int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, LinkedListData playPiles, LinkedListData discardPile) {
-    if((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1.data.color, discardPlayingOn.data.color) == 0) {
+int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node *moveVal1, LinkedListData playPiles, LinkedListData discardPile) {
+    if((moveVal1->data.value == discardPlayingOn.data.value || moveVal1->data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1->data.color, discardPlayingOn.data.color) == 0) {
         printf("Single Color Match!\n");
-        swapNodes(playerHand.head->nextPtr, &moveVal1);
+        //swapNodes(playerHand.head->nextPtr, moveVal1);
         swapNodes(playPiles.head->nextPtr, &discardPlayingOn);
-        drawFromDrawPile(discardPile, playerHand);
+        moveVal1->data.value = -3;
         drawFromDrawPile(discardPile, playPiles);
         return 1;
-    } else if ((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0)){
+    } else if ((moveVal1->data.value == discardPlayingOn.data.value || moveVal1->data.value == 0 || discardPlayingOn.data.value == 0)){
         printf("Move processed successfully\n");
-        swapNodes(playerHand.head->nextPtr, &moveVal1); //Works
+        //swapNodes(playerHand.head->nextPtr, moveVal1); //Works
         swapNodes(playPiles.head->nextPtr, &discardPlayingOn); //
-        drawFromDrawPile(discardPile, playerHand);
+        moveVal1->data.value = -3;
         drawFromDrawPile(discardPile, playPiles);
         return 0;
     } else {
@@ -240,8 +240,8 @@ int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawD
             int nodeIndex = 0;
             printf("Enter the card in this form \"1\":");
             scanf("%d", &nodeIndex);
-            
-            if(updateListsForTurnWithOneCard(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex), playPiles, discardData) >= 0){
+
+            if(updateListsForTurnWithOneCard(playerHand, discardPlayingOn, getElementFromIndex(&playerHand, nodeIndex), playPiles, discardData) >= 0){
                 playPileComplete = true;
             }
         } else if (cardsToPlay == 0) {
