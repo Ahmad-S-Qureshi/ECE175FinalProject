@@ -129,14 +129,12 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
 
 // idk if this or the above works UPDATE: both work but need the node to be immediately after the head
 void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
-    swapNodes(fromData->head->nextPtr, toBeMoved);
+    //swapNodes(fromData->head->nextPtr, toBeMoved);
     toBeMoved->prevPtr->nextPtr = toBeMoved->nextPtr;
     toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
     toBeMoved->nextPtr = toData->head->nextPtr;
     toData->head->nextPtr = toBeMoved;
     toBeMoved->prevPtr = toData->head;
-    printList(*fromData);
-    1==1;
 }
 
 // Moves entire discard pile to draw pile, merge discards beforehand
@@ -179,16 +177,20 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
 }
 
 //Return 1 if color match, 0 if not color match but valid move, -1 if invalid move
-int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, LinkedListData playPiles) {
+int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, LinkedListData playPiles, LinkedListData discardPile) {
     if((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1.data.color, discardPlayingOn.data.color) == 0) {
         printf("Single Color Match!\n");
         swapNodes(playerHand.head->nextPtr, &moveVal1);
-        drawFromDrawPile(playPiles, playerHand);
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn);
+        drawFromDrawPile(discardPile, playerHand);
+        drawFromDrawPile(discardPile, playPiles);
         return 1;
     } else if ((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0)){
         printf("Move processed successfully\n");
         swapNodes(playerHand.head->nextPtr, &moveVal1);
-        drawFromDrawPile(playerHand, playPiles);
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn);
+        drawFromDrawPile(discardPile, playerHand);
+        drawFromDrawPile(discardPile, playPiles);
         return 0;
     } else {
         printf("Invalid move, try again!\n");
@@ -213,7 +215,7 @@ void emptyList(LinkedListData toBeVanished) {
     toBeVanished.tail->nextPtr = NULL;
 }
 
-int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawData, LinkedListData playPiles) {
+int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawData, LinkedListData playPiles, LinkedListData discardData) {
     //blah blah logic
     
     printf("Now playing on:\n");
@@ -237,8 +239,8 @@ int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawD
         } else if (cardsToPlay == 1){
             int nodeIndex = 0;
             printf("Enter the card in this form \"1\":");
-            scanf("%d", &nodeIndex);playPileComplete = true;
-            if(updateListsForTurnWithOneCard(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex), playPiles) > 0){
+            scanf("%d", &nodeIndex);
+            if(updateListsForTurnWithOneCard(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex), playPiles, discardData) >= 0){
                 playPileComplete = true;
             }
         } else if (cardsToPlay == 0) {

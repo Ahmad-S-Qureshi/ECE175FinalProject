@@ -107,11 +107,11 @@ int main() {
             int numCardPlayingOn = getLinkedListLength(&playPiles) - 2;
             printf("There are %d cards to play on\n", getLinkedListLength(&playPiles) - 2);
             for (int i = 0; i<numCardPlayingOn && numCardsLeft != 0; i++) {
-                numCardsLeft = turns(playerHands[currPlayer].dataStorage, *nodePlayingOn, drawData, playPiles);
+                numCardsLeft = turns(playerHands[currPlayer].dataStorage, *nodePlayingOn, drawData, playPiles, discardData);
                 nodePlayingOn=nodePlayingOn->nextPtr;
             }
             /* game code goes here */
-            if(roundComplete) {
+            if(!roundComplete) {
                 currPlayer++;
             }
             if(numCardsLeft == 0) {
