@@ -11,6 +11,7 @@
 int main() {
     srand((int)time(NULL));
     bool closed = false;
+    printf("Welcome to DOS! \nDon't wory about cheating, the screen clears as necessary just follow the prompts as they show up.\n");
     printf("Enter the number of players (2-6) planning to play: ");
     int numPlayers;
     scanf("%d", &numPlayers);
@@ -38,10 +39,6 @@ int main() {
         currPlayerTailNode->data.value = -5;
         currPlayerHeadNode->nextPtr = currPlayerTailNode;
         currPlayerTailNode->prevPtr = currPlayerHeadNode;
-    }
-    for(int i = 0; i<numPlayers; i++) {
-        printList(playerHands[i].dataStorage);
-        printf("Player %d initialized\n", i + 1);
     }
     while(!closed) {
         int currPlayer = 0;
@@ -99,9 +96,11 @@ int main() {
 
         while (!roundComplete){
             currPlayer = currPlayer%numPlayers;
+            system("clear");
             printf("Now Player %d's turn! Hand the computer to them and press enter! ", currPlayer + 1);
             char randomNothing;
             scanf("%*c%c", &randomNothing);
+            system("clear");
             int numCardsLeft = 200;
             while(getLinkedListLength(&playPiles) < 4) {
                 drawFromDrawPile(playPiles, drawData);

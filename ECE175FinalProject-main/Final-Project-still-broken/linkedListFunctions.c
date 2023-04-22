@@ -22,8 +22,12 @@ void initializeNode(Node *prevNode, Node *toBeInitialized, char *color, int val)
 // Iterates through a list and grabs a node at the n-th index
 Node *getElementFromIndex(LinkedListData *data, int index) {
     Node *currNode = data->head;
-    for(int i = 0; i < index; i++) {
+    int i = 0; 
+    while(i < index) {
         currNode = currNode->nextPtr;
+        if(currNode->data.value != -3) {
+            i++;
+        }
     }
     return currNode;
 }
@@ -176,14 +180,45 @@ int turnValid(Node moveVal1, Node moveVal2, Node discardPlayingOn) {
     
 }
 
-int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, Node moveVal2) {
+int doubleColorMatch() {
     
+}
+
+int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayingOn, Node *moveVal1, Node *moveVal2, LinkedListData playPiles, LinkedListData discardPile) {
+    int sum = moveVal1->data.value + moveVal2->data.value;
+    bool isAnyHashtag = (moveVal1->data.value==0 || moveVal2->data.value == 0 || discardPlayingOn.data.value == 0);
+    bool isSameColor = (((strcmp(moveVal1->data.color, moveVal2->data.color) == 0) && (strcmp(moveVal1->data.color, discardPlayingOn.data.color) == 0)) ||
+                        ((strcmp(moveVal1->data.color, "Wild") == 0) && strcmp(moveVal2->data.color, discardPlayingOn.data.color) == 0));
+    if(sum == discardPlayingOn.data.value) {
+        printf("Move processed successfully\n");
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
+        moveVal1->data.value = -3;
+        moveVal2->data.value = -3;
+        drawFromDrawPile(discardPile, playPiles);
+        doubleColorMatch();
+    } else if (sum < discardPlayingOn.data.value && isAnyHashtag){
+        printf("Move processed successfully\n");
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
+        moveVal1->data.value = -3;
+        moveVal2->data.value = -3;
+        drawFromDrawPile(discardPile, playPiles);
+    } else {
+        printf("Invalid move, try again!\n");
+        return -1;
+    }
+}
+
+
+
+int singleColorMatch() {
+
 }
 
 //Return 1 if color match, 0 if not color match but valid move, -1 if invalid move
 int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node *moveVal1, LinkedListData playPiles, LinkedListData discardPile) {
     if((moveVal1->data.value == discardPlayingOn.data.value || moveVal1->data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1->data.color, discardPlayingOn.data.color) == 0) {
         printf("Single Color Match!\n");
+        singleColorMatch();
         //swapNodes(playerHand.head->nextPtr, moveVal1);
         swapNodes(playPiles.head->nextPtr, &discardPlayingOn);
         moveVal1->data.value = -3;
@@ -224,7 +259,7 @@ int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawD
     
     printf("Now playing on:\n");
     printNode(&discardPlayingOn);
-    printf("Your cards are as follows: ");
+    printf("Your cards are as follows: \n");
     printList(playerHand);
     bool playPileComplete = false;
 
@@ -238,7 +273,7 @@ int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawD
             int nodeIndex2 = 0;
             printf("Enter the two cards in this form \"1 and 2\": ");
             scanf("%d and %d", &nodeIndex1, &nodeIndex2);
-            updateListsForTurnWithTwoCards(playerHand, discardPlayingOn, *getElementFromIndex(&playerHand, nodeIndex1), *getElementFromIndex(&playerHand, nodeIndex2));
+            updateListsForTurnWithTwoCards(playerHand, discardPlayingOn, getElementFromIndex(&playerHand, nodeIndex1), getElementFromIndex(&playerHand, nodeIndex2), playPiles, discardData);
             playPileComplete = true;
         } else if (cardsToPlay == 1) {
             int nodeIndex = 0;
