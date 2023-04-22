@@ -111,8 +111,9 @@ int main() {
                 nodePlayingOn=nodePlayingOn->nextPtr;
             }
             /* game code goes here */
-            
-            currPlayer++;
+            if(roundComplete) {
+                currPlayer++;
+            }
             if(numCardsLeft == 0) {
                 roundComplete = true;
             }
