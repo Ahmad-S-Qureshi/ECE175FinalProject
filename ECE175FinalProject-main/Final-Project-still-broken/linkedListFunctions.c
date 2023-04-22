@@ -127,13 +127,16 @@ Node *moveToOtherLinkedList(LinkedListData *oldListData, LinkedListData *newList
     oldNode->prevPtr = newHead; 
 }
 
-// idk if this or the above works UPDATE: both work
+// idk if this or the above works UPDATE: both work but need the node to be immediately after the head
 void moveNode(LinkedListData *fromData, LinkedListData *toData, Node *toBeMoved) {
+    swapNodes(fromData->head->nextPtr, toBeMoved);
     toBeMoved->prevPtr->nextPtr = toBeMoved->nextPtr;
     toBeMoved->nextPtr->prevPtr = toBeMoved->prevPtr;
     toBeMoved->nextPtr = toData->head->nextPtr;
     toData->head->nextPtr = toBeMoved;
     toBeMoved->prevPtr = toData->head;
+    printList(*fromData);
+    1==1;
 }
 
 // Moves entire discard pile to draw pile, merge discards beforehand
@@ -179,11 +182,13 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
 int updateListsForTurnWithOneCard(LinkedListData playerHand, Node discardPlayingOn, Node moveVal1, LinkedListData playPiles) {
     if((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0) && strcmp(moveVal1.data.color, discardPlayingOn.data.color) == 0) {
         printf("Single Color Match!\n");
-        moveNode(&playerHand, &playPiles, &moveVal1);
+        swapNodes(playerHand.head->nextPtr, &moveVal1);
+        drawFromDrawPile(playPiles, playerHand);
         return 1;
-    } else if (moveVal1.data.value == discardPlayingOn.data.value){
+    } else if ((moveVal1.data.value == discardPlayingOn.data.value || moveVal1.data.value == 0 || discardPlayingOn.data.value == 0)){
         printf("Move processed successfully\n");
-        moveNode(&playerHand, &playPiles, &moveVal1);
+        swapNodes(playerHand.head->nextPtr, &moveVal1);
+        drawFromDrawPile(playerHand, playPiles);
         return 0;
     } else {
         printf("Invalid move, try again!\n");
