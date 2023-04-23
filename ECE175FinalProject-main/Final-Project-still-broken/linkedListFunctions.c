@@ -194,7 +194,7 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
                         ((strcmp(discardPlayingOn.data.color, "Wild") == 0) && strcmp(moveVal2->data.color, moveVal1->data.color) == 0) ||
                         ((strcmp(discardPlayingOn.data.color, "Wild") == 0) && strcmp(moveVal2->data.color, moveVal1->data.color) == 0) ||
                         ((strcmp(discardPlayingOn.data.color, "Wild") == 0) + (strcmp(moveVal1->data.color, "Wild") == 0) + (strcmp(moveVal2->data.color, "Wild") == 0) >= 0));
-    if(sum == discardPlayingOn.data.value || isSameColor) {
+    if(sum == discardPlayingOn.data.value && isSameColor) {
         printf("Double Color Match!\n");
         swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
         moveVal1->data.value = -3;
@@ -202,7 +202,7 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
         drawFromDrawPile(discardPile, playPiles);
         
         doubleColorMatch();
-    } else if (sum < discardPlayingOn.data.value && isAnyHashtag){
+    } else if (sum < discardPlayingOn.data.value && isAnyHashtag && isSameColor){
         printf("Move processed successfully\n");
         swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
         moveVal1->data.value = -3;
