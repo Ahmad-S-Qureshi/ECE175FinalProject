@@ -196,13 +196,20 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
                         ((strcmp(discardPlayingOn.data.color, "Wild") == 0) + (strcmp(moveVal1->data.color, "Wild") == 0) + (strcmp(moveVal2->data.color, "Wild") == 0) > 1));
     if(((sum == discardPlayingOn.data.value) || (sum < discardPlayingOn.data.value && isAnyHashtag)) && isSameColor) {
         printf("Double Color Match!\n");
-        swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
-        moveVal1->data.value = -3;
-        moveVal2->data.value = -3;
-        drawFromDrawPile(discardPile, playPiles);
-        
-        doubleColorMatch();
-        *cardsPlayed = *cardsPlayed+1;
+        printf("Your cards are as follows\n");
+        printList(playerHand);
+        int cardToMoveIndex;
+        printf("Enter a card as such \"1\": ");
+        scanf("%d", &cardToMoveIndex);
+        while (cardToMoveIndex> getLinkedListLength(&playerHand)){
+            printf("Invalid Input, try again: ");
+            scanf("%d", &cardToMoveIndex);
+        }
+        printf("Moving This card\n");
+        printNode(getElementFromIndex(&playerHand, cardToMoveIndex));
+        //swapNodes(playerHand.head->nextPtr, moveVal1);
+        playPiles.head->nextPtr->data.value = -3;
+        swapNodes(playPiles.head->nextPtr, getElementFromIndex(&playerHand, cardToMoveIndex));
         return 1;
     } else if (sum < discardPlayingOn.data.value && isAnyHashtag){
         printf("Move processed successfully\n");
@@ -218,7 +225,7 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
         moveVal1->data.value = -3;
         moveVal2->data.value = -3;
         drawFromDrawPile(discardPile, playPiles);
-        *cardsPlayed = *cardsPlayed+1;
+        *cardsPlayed = (*cardsPlayed)-(*cardsPlayed)+1;
         return 0;
     } else {
         printf("Invalid move, try again!\n");
@@ -292,13 +299,14 @@ void emptyList(LinkedListData toBeVanished) {
 int turns(LinkedListData playerHand, Node discardPlayingOn, LinkedListData drawData, LinkedListData playPiles, LinkedListData discardData, int *cardsToPull, int *cardsPlayed) {
     //blah blah logic
     
-    printf("Now playing on:\n");
-    printNode(&discardPlayingOn);
-    printf("Your cards are as follows: \n");
-    printList(playerHand);
+    
     bool playPileComplete = false;
 
     while (!playPileComplete){
+        printf("Now playing on:\n");
+        printNode(&discardPlayingOn);
+        printf("Your cards are as follows: \n");
+        printList(playerHand);
         int cardsToPlay = 0;
         printf("Enter how many cards you want to play on this card, 0, 1, or 2: ");
         scanf("%d", &cardsToPlay);

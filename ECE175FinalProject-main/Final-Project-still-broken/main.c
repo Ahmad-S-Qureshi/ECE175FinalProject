@@ -116,7 +116,7 @@ int main() {
             int cardsDiscarded;
             Node *tempNext = nodePlayingOn->nextPtr;
             printf("There are %d cards to play on\n", getLinkedListLength(&playPiles) - 2);
-            for (int i = 0; i<numCardPlayingOn && numCardsLeft != 0; i++) {
+            for (int i = 0; i<numCardPlayingOn && numCardsLeft != 0 && nodePlayingOn != NULL; i++) {
                 
                 int cardsToPull;
                 
