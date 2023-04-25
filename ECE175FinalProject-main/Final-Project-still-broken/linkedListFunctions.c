@@ -196,20 +196,13 @@ int updateListsForTurnWithTwoCards(LinkedListData playerHand, Node discardPlayin
                         ((strcmp(discardPlayingOn.data.color, "Wild") == 0) + (strcmp(moveVal1->data.color, "Wild") == 0) + (strcmp(moveVal2->data.color, "Wild") == 0) > 1));
     if(((sum == discardPlayingOn.data.value) || (sum < discardPlayingOn.data.value && isAnyHashtag)) && isSameColor) {
         printf("Double Color Match!\n");
-        printf("Your cards are as follows\n");
-        printList(playerHand);
-        int cardToMoveIndex;
-        printf("Enter a card as such \"1\": ");
-        scanf("%d", &cardToMoveIndex);
-        while (cardToMoveIndex> getLinkedListLength(&playerHand)){
-            printf("Invalid Input, try again: ");
-            scanf("%d", &cardToMoveIndex);
-        }
-        printf("Moving This card\n");
-        printNode(getElementFromIndex(&playerHand, cardToMoveIndex));
-        //swapNodes(playerHand.head->nextPtr, moveVal1);
-        playPiles.head->nextPtr->data.value = -3;
-        swapNodes(playPiles.head->nextPtr, getElementFromIndex(&playerHand, cardToMoveIndex));
+        swapNodes(playPiles.head->nextPtr, &discardPlayingOn); 
+        moveVal1->data.value = -3;
+        moveVal2->data.value = -3;
+        drawFromDrawPile(discardPile, playPiles);
+        
+        doubleColorMatch();
+        *cardsPlayed = *cardsPlayed+1;
         return 1;
     } else if (sum < discardPlayingOn.data.value && isAnyHashtag){
         printf("Move processed successfully\n");
