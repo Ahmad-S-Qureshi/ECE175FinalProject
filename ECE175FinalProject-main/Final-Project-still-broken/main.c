@@ -12,6 +12,12 @@ int main() {
     srand((int)time(NULL));
     bool closed = false;
     printf("Welcome to DOS! \nDon't wory about cheating, the screen clears as necessary just follow the prompts as they show up.\n");
+    printf("Enter the filename of the deck or \"standard\" for the basic deck: ");
+    char filename[FILENAME_MAX];
+    scanf("%s", filename);
+    if(strcmp(filename, "standard") == 0) {
+        strcpy(filename, "CardDeck.txt");
+    }
     printf("Enter the number of players (2-6) planning to play: ");
     int numPlayers;
     scanf("%d", &numPlayers);
@@ -53,7 +59,7 @@ int main() {
 
         LinkedListData discardData;
         initializeData(discardData);
-        FILE* fp = fopen("listOfCards.txt", "r");
+        FILE* fp = fopen(filename, "r");
         Node discardHeadNode;
         initializeNode(&discardHeadNode, &discardHeadNode, "head discard", -2);
         discardData.head = &discardHeadNode;
@@ -107,13 +113,41 @@ int main() {
             }
             Node *nodePlayingOn = playPiles.head->nextPtr; 
             int numCardPlayingOn = getLinkedListLength(&playPiles) - 2;
-            
+            int cardsDiscarded;
+            Node *tempNext = nodePlayingOn->nextPtr;
             printf("There are %d cards to play on\n", getLinkedListLength(&playPiles) - 2);
             for (int i = 0; i<numCardPlayingOn && numCardsLeft != 0; i++) {
-                Node *tempNext = nodePlayingOn->nextPtr;
-                numCardsLeft = turns(playerHands[currPlayer].dataStorage, *nodePlayingOn, drawData, playPiles, discardData);
-                nodePlayingOn = tempNext;
+                
+                int cardsToPull;
+                
+                numCardsLeft = turns(playerHands[currPlayer].dataStorage, *nodePlayingOn, drawData, playPiles, discardData, &cardsToPull, &cardsDiscarded);
+                for(int currPlayerIndex = 0; currPlayerIndex<numPlayers; currPlayerIndex++) {
+                    for(int initialDealAmount = 0; initialDealAmount < cardsToPull; initialDealAmount++) {
+                        if(currPlayerIndex != currPlayer) {
+                            drawFromDrawPile(playerHands[currPlayerIndex].dataStorage, drawData);
+                        }
+                    }
+                    true == true;
+                }
+                cardsToPull = 0;
+                nodePlayingOn = nodePlayingOn->nextPtr;
+                if (!(nodePlayingOn == NULL)) {
+                    while(nodePlayingOn->data.value < 0) {
+                        nodePlayingOn = nodePlayingOn->nextPtr;
+                        if(nodePlayingOn == NULL) {
+                            break;
+                        }
+                    }
+                }
+                
             }
+
+            if(cardsDiscarded == 0) {
+                    printf("You didn't play anything! You drew a card, press enter to continue ");
+                    drawFromDrawPile(playerHands[currPlayer].dataStorage, drawData);
+                    scanf("%c%*c", &randomNothing);
+                }
+                nodePlayingOn = tempNext;
             /* game code goes here */
             if(!roundComplete) {
                 currPlayer++;

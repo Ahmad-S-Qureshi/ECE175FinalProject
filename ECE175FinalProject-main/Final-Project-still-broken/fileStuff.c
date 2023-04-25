@@ -27,14 +27,45 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
     // An int to hold card number value (Wilds set to be zero)
     int value; 
 
+    char nothing[20];
+
     // Reads in a link
-    fscanf(fp, "%d %s\n", &value, color);
+    fscanf(fp, "%s %d %s\n", color, &value, nothing);
+    if (value == 11) {
+        value = 0;
+    }
+    if(strcmp(color, "black") ==0) {
+        strcpy(color, "Wild");
+    } else if (strcmp(color, "yellow") == 0) {
+        strcpy(color, "Yellow");
+    } else if (strcmp(color, "blue") == 0) { 
+        strcpy(color, "Blue");
+    } else if (strcmp(color, "green") == 0) { 
+        strcpy(color, "Green");
+    } else if (strcmp(color, "red") == 0) { 
+        strcpy(color, "Red");
+    }
+
 
     // Continually reads lines and makes nodes until the line is Tail
-    while(strcmp(color, "Tail") != 0) {
+    while(!feof(fp)) {
 
         // Ensures a line has something in it
         if(strcmp("\n", color) != 0) {
+            if (value == 11) {
+                value = 0;
+            }
+            if(strcmp(color, "black") ==0) {
+                strcpy(color, "Wild");
+            } else if (strcmp(color, "yellow") == 0) {
+                strcpy(color, "Yellow");
+            } else if (strcmp(color, "blue") == 0) { 
+                strcpy(color, "Blue");
+            } else if (strcmp(color, "green") == 0) { 
+                strcpy(color, "Green");
+            } else if (strcmp(color, "red") == 0) { 
+                strcpy(color, "Red");
+    }
 
             // Makes the previous node point to the new one to be formed
             prev->nextPtr = toBeNext;
@@ -50,7 +81,7 @@ Node *initializeLinkedListFromFile(LinkedListData data, FILE *fp) {
             toBeNext->data.value=value;
 
             // Grabs next line
-            fscanf(fp, "%d %s\n", &value, color);
+            fscanf(fp, "%s %d %s\n", color, &value, nothing);
 
             // Iterates prev and makes a new node to insert
             prev = toBeNext;
